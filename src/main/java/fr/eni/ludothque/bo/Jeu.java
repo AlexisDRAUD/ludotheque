@@ -2,12 +2,14 @@ package fr.eni.ludothque.bo;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @RequiredArgsConstructor
-@ToString
+@ToString(exclude = "genres")
 @Entity
 @Table(name = "JEUX")
 public class Jeu {
@@ -34,5 +36,11 @@ public class Jeu {
     @Column(nullable = false)
     @NonNull private Double tarifJour;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "JEU_GENRE",
+            joinColumns = @JoinColumn(name = "jeu_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private Set<Genre> genres = new HashSet<>();
 }
-

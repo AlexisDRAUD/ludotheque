@@ -23,7 +23,7 @@ public class Client {
     @Column(nullable = false, length = 50)
     @NonNull private String prenom;
 
-    @Column(nullable = false, length = 20, unique = true)
+    @Column(nullable = false, length = 50, unique = true)
     @NonNull private String email;
 
     @Column(nullable = false, length = 10, unique = true)
