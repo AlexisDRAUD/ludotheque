@@ -22,7 +22,7 @@ public class JeuRepositoryTest {
     @DisplayName("Tester la création d'un jeu sans genre")
     public void testCreateJeuSansGenre() {
         // Arrange
-        Jeu jeu = new Jeu("Monopoly", "ref1", 10.0d);
+        Jeu jeu = new Jeu("Monopoly", "ref1", 10.0f);
         jeu.setAgeMin(18);
         jeu.setDescription("Jeu de capitaliste");
         jeu.setDuree(120);
@@ -45,7 +45,7 @@ public class JeuRepositoryTest {
         // Sauvegarder d'abord le genre
         Genre savedGenre = genreRepository.save(genre);
 
-        Jeu jeu = new Jeu("Risk", "ref2", 15.0d);
+        Jeu jeu = new Jeu("Risk", "ref2", 15.0f);
         jeu.getGenres().add(savedGenre);  // Utiliser le genre sauvegardé
 
         // Act

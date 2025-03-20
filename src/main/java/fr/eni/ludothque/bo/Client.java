@@ -29,7 +29,7 @@ public class Client {
     @Column(nullable = false, length = 10, unique = true)
     @NonNull private String noTel;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "adresse_id", referencedColumnName = "id")
     private Adresse adresse;
 }

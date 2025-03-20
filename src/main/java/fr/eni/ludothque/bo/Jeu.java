@@ -2,7 +2,10 @@ package fr.eni.ludothque.bo;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -21,26 +24,30 @@ public class Jeu {
     @Column(nullable = false, length = 50)
     @NonNull private String titre;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 13, unique = true)
     @NonNull private String reference;
 
     @Column
-    private Integer ageMin;
+    private int ageMin;
 
     @Column(length = 100)
     private String description;
 
     @Column
-    private Integer duree;
+    private int duree;
 
     @Column(nullable = false)
-    @NonNull private Double tarifJour;
+    @NonNull private float tarifJour;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "JEU_GENRE",
+            name = "JEUX_GENRES",
             joinColumns = @JoinColumn(name = "jeu_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
-    private Set<Genre> genres = new HashSet<>();
+    private List<Genre> genres = new ArrayList<>();
+
+    public void addGenre(Genre genre) {
+        genres.add(genre);
+    }
 }
