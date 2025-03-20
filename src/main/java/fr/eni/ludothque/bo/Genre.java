@@ -9,7 +9,7 @@ import java.util.Set;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @RequiredArgsConstructor
-@ToString(exclude = "jeux")
+@ToString()
 @Entity
 @Table(name = "GENRES")
 public class Genre {
@@ -20,7 +20,4 @@ public class Genre {
 
     @Column(nullable = false, length = 50)
     @NonNull private String libelle;
-
-    @ManyToMany(mappedBy = "genres")
-    private Set<Jeu> jeux = new HashSet<>();
 }

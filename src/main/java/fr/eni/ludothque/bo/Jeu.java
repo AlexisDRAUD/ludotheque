@@ -9,7 +9,7 @@ import java.util.Set;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @RequiredArgsConstructor
-@ToString(exclude = "genres")
+@ToString(exclude = {"genres"})
 @Entity
 @Table(name = "JEUX")
 public class Jeu {
