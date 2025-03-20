@@ -1,7 +1,6 @@
 package fr.eni.ludothque.dal;
 
 import fr.eni.ludothque.bo.Adresse;
-import fr.eni.ludothque.bo.Client;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
