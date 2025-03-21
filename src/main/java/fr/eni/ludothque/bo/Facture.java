@@ -18,8 +18,8 @@ public class Facture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
-    private LocalDateTime datePaiment;
+    @Column(nullable = false)
+    @NonNull private LocalDateTime datePaiment;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "location_id", referencedColumnName = "id")

@@ -1,6 +1,7 @@
 package fr.eni.ludothque.bll;
 
 import fr.eni.ludothque.bo.*;
+import fr.eni.ludothque.dal.ExemplaireRepository;
 import fr.eni.ludothque.dal.FactureRepository;
 import fr.eni.ludothque.dal.LocationRepository;
 import lombok.NonNull;
@@ -16,6 +17,8 @@ import java.util.Optional;
 public class LocationServiceImpl implements LocationService {
 
     @NonNull
+    private ExemplaireRepository exemplaireRepository;
+    @NonNull
     private LocationRepository locationRepository;
     @NonNull
     private FactureRepository factureRepository;
@@ -25,8 +28,19 @@ public class LocationServiceImpl implements LocationService {
         if (exemplaire.isEstLouable()) {
             Location location = new Location(LocalDateTime.now(), client, exemplaire);
             locationRepository.save(location);
-            Facture facture = new Facture(location);
-            factureRepository.save(facture);
+            exemplaire.setEstLouable(false);
+            exemplaireRepository.save(exemplaire);
         }
+    }
+
+    public void endLocation(Location location) {
+        LocalDateTime now = LocalDateTime.now();
+        Facture facture = new Facture(now, location);
+        factureRepository.save(facture);
+        Exemplaire exemplaire = location.getExemplaire();
+        exemplaire.setEstLouable(true);
+        exemplaireRepository.save(exemplaire);
+        location.setDateRetour(now);
+        locationRepository.save(location);
     }
 }
