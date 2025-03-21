@@ -19,7 +19,8 @@ public class ClientRepositoryTest {
     @DisplayName("Tester la création d'un client sans adresse")
     public void testCreateClientSansAdresse() {
         // Arrange
-        Client client = new Client("Dupont", "Jean", "jean.dupont@example.com", "0123456789");
+        Adresse adresse = new Adresse("7 rue Colette Magny", "44100", "Nantes");
+        Client client = new Client("Dupont", "Jean", "jean.dupont@example.com", "0123456789", adresse);
 
         // Act
         Client savedClient = clientRepository.save(client);
@@ -35,7 +36,7 @@ public class ClientRepositoryTest {
     public void testCreateClientAvecAdresse() {
         // Arrange
         Adresse adresse = new Adresse("1 rue de la Paix", "75001", "Paris");
-        Client client = new Client("Martin", "Sophie", "sophie.martin@example.com", "0123456788");
+        Client client = new Client("Martin", "Sophie", "sophie.martin@example.com", "0123456788", adresse);
         client.setAdresse(adresse);
 
         // Act

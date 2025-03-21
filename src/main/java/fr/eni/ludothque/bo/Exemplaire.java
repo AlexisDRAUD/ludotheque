@@ -16,11 +16,11 @@ public class Exemplaire {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 13)
     @NonNull private String codeBarre;
 
-    @Column(nullable = false)
-    private boolean estLouable = true;
+    @Basic(optional = false)
+    @NonNull private boolean estLouable;
 
     @ManyToOne
     @JoinColumn(name = "jeu_id")

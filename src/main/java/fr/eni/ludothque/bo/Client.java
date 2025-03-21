@@ -31,5 +31,5 @@ public class Client {
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "adresse_id", referencedColumnName = "id")
-    private Adresse adresse;
+    @NonNull private Adresse adresse;
 }

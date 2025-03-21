@@ -1,12 +1,11 @@
 package fr.eni.ludothque.bo;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor(force = true)
@@ -39,13 +38,14 @@ public class Jeu {
     @Column(nullable = false)
     @NonNull private float tarifJour;
 
+    @NotEmpty
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "JEUX_GENRES",
             joinColumns = @JoinColumn(name = "jeu_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
-    private List<Genre> genres = new ArrayList<>();
+    @NonNull private List<Genre> genres = new ArrayList<>();
 
     public void addGenre(Genre genre) {
         genres.add(genre);
