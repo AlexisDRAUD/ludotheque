@@ -23,8 +23,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void removeClient(Client client) {
-        clientRepository.delete(client);
+    public void removeClient(int id) {
+        clientRepository.deleteById(id);
     }
 
     @Override
@@ -34,13 +34,39 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public List<Client> findAllClients() {
+        return clientRepository.findAll();
+    }
+
+    @Override
     public List<Client> findAllClientByNom(String nom) {
         return clientRepository.findByNom(nom);
     }
 
     @Override
     public void updateClient(Client client) {
-        clientRepository.save(client);
+        if (clientRepository.findById(client.getId()).isPresent()) {
+            clientRepository.save(client);
+        } else {
+            throw new RuntimeException("Client non trouvé avec l'ID : " + client.getId());
+        }
+    }
+
+    @Override
+    public void partialUpdateClient(Integer id, Client updates) {
+        Optional<Client> optionalClient = clientRepository.findById(id);
+        if (optionalClient.isPresent()) {
+            Client client = optionalClient.get();
+
+            if (updates.getNom() != null) client.setNom(updates.getNom());
+            if (updates.getPrenom() != null) client.setPrenom(updates.getPrenom());
+            if (updates.getEmail() != null) client.setEmail(updates.getEmail());
+            if (updates.getAdresse() != null) client.setAdresse(updates.getAdresse());
+
+            clientRepository.save(client);
+        } else {
+            throw new RuntimeException("Client non trouvé avec l'ID : " + id);
+        }
     }
 
     @Override

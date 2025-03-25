@@ -1,9 +1,9 @@
 package fr.eni.ludothque.bll;
 
-import fr.eni.ludothque.bo.Adresse;
 import fr.eni.ludothque.bo.Genre;
 import fr.eni.ludothque.bo.Jeu;
 import fr.eni.ludothque.dal.ExemplaireRepository;
+import fr.eni.ludothque.dal.GenreRepository;
 import fr.eni.ludothque.dal.JeuRepository;
 import fr.eni.ludothque.dto.JeuDTO;
 import lombok.NonNull;
@@ -21,6 +21,8 @@ public class JeuServiceImpl implements JeuService {
     private final ExemplaireRepository exemplaireRepository;
     @NonNull
     private JeuRepository jeuRepository;
+    @NonNull
+    private GenreRepository genreRepository;
 
     @Override
     public void addJeu(Jeu jeu) {

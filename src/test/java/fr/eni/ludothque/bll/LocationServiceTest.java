@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -58,10 +59,10 @@ class LocationServiceTest {
     @Test
     void testEndLocation() {
         when(exemplaireRepository.save(any(Exemplaire.class))).thenReturn(exemplaire);
-        when(factureRepository.save(any(Facture.class))).thenReturn(new Facture(LocalDateTime.now(), location));
+        when(factureRepository.save(any(Facture.class))).thenReturn(new Facture(LocalDateTime.now(), List.of(location)));
         when(locationRepository.save(any(Location.class))).thenReturn(location);
 
-        locationService.endLocation(location);
+        locationService.endLocations(List.of(location));
 
         verify(factureRepository, times(1)).save(any(Facture.class));
         verify(exemplaireRepository, times(1)).save(any(Exemplaire.class));

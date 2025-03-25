@@ -34,4 +34,8 @@ public class Location {
     @ManyToOne
     @JoinColumn(name = "exemplaire_id")
     @NonNull private Exemplaire exemplaire;
+
+    @ManyToOne
+    @JoinColumn(name = "facture_id")
+    private Facture facture;
 }

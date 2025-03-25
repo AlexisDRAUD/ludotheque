@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,14 +32,18 @@ public class LocationServiceImpl implements LocationService {
         }
     }
 
-    public void endLocation(Location location) {
+    public void endLocations(List<Location> locations) {
         LocalDateTime now = LocalDateTime.now();
-        Facture facture = new Facture(now, location);
+        Facture facture = new Facture(now, locations);
         factureRepository.save(facture);
-        Exemplaire exemplaire = location.getExemplaire();
-        exemplaire.setEstLouable(true);
-        exemplaireRepository.save(exemplaire);
-        location.setDateRetour(now);
-        locationRepository.save(location);
+
+        for (Location location : locations) {
+            Exemplaire exemplaire = location.getExemplaire();
+            exemplaire.setEstLouable(true);
+            exemplaireRepository.save(exemplaire);
+
+            location.setDateRetour(now);
+            locationRepository.save(location);
+        }
     }
 }

@@ -47,6 +47,15 @@ public class Jeu {
     )
     @NonNull private List<Genre> genres = new ArrayList<>();
 
+    public Jeu(String titre, String reference, int ageMin, String description, int duree, float tarifJour) {
+        this.titre = titre;
+        this.reference = reference;
+        this.ageMin = ageMin;
+        this.description = description;
+        this.duree = duree;
+        this.tarifJour = tarifJour;
+    }
+
     public void addGenre(Genre genre) {
         genres.add(genre);
     }
