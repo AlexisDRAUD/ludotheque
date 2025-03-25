@@ -1,6 +1,7 @@
 package fr.eni.ludothque.bll;
 
 import fr.eni.ludothque.bo.*;
+import fr.eni.ludothque.dal.ClientRepository;
 import fr.eni.ludothque.dal.ExemplaireRepository;
 import fr.eni.ludothque.dal.FactureRepository;
 import fr.eni.ludothque.dal.LocationRepository;
@@ -21,6 +22,8 @@ public class LocationServiceImpl implements LocationService {
     private LocationRepository locationRepository;
     @NonNull
     private FactureRepository factureRepository;
+    @NonNull
+    private ClientRepository clientRepository;
 
     @Override
     public void addLocation(Client client, Exemplaire exemplaire) {
@@ -31,6 +34,25 @@ public class LocationServiceImpl implements LocationService {
             exemplaireRepository.save(exemplaire);
         }
     }
+
+    @Override
+    public void addLocationByBarcode(Integer clientId, String codeBarre) {
+        Exemplaire exemplaire = exemplaireRepository.findByCodeBarre(codeBarre)
+                .orElseThrow(() -> new RuntimeException("Exemplaire non trouvé"));
+
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new RuntimeException("Client non trouvé"));
+
+        if (!exemplaire.isEstLouable()) {
+            throw new RuntimeException("Cet exemplaire n'est pas disponible à la location.");
+        }
+
+        Location location = new Location(LocalDateTime.now(), client, exemplaire);
+        locationRepository.save(location);
+        exemplaire.setEstLouable(false);
+        exemplaireRepository.save(exemplaire);
+    }
+
 
     public void endLocations(List<Location> locations) {
         LocalDateTime now = LocalDateTime.now();
