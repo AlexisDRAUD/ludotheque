@@ -53,19 +53,35 @@ public class LocationServiceImpl implements LocationService {
         exemplaireRepository.save(exemplaire);
     }
 
+    @Override
+    public void returnLocations(List<String> codeBarres, Integer clientId) {
+        List<Location> locations = locationRepository.findByExemplaireCodeBarreInAndClientId(codeBarres, clientId);
 
-    public void endLocations(List<Location> locations) {
+        if (locations.isEmpty()) {
+            throw new RuntimeException("Aucune location trouvée pour ces code-barres.");
+        }
+
         LocalDateTime now = LocalDateTime.now();
+
+        for (Location location : locations) {
+            location.setDateRetour(now);
+            exemplaireRepository.save(location.getExemplaire());
+            locationRepository.save(location);
+        }
+
         Facture facture = new Facture(now, locations);
         factureRepository.save(facture);
+
+        for (Location location : locations) {
+            location.setFacture(facture);
+            locationRepository.save(location);
+        }
 
         for (Location location : locations) {
             Exemplaire exemplaire = location.getExemplaire();
             exemplaire.setEstLouable(true);
             exemplaireRepository.save(exemplaire);
-
-            location.setDateRetour(now);
-            locationRepository.save(location);
         }
     }
+
 }
