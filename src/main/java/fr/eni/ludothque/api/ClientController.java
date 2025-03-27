@@ -21,7 +21,7 @@ public class ClientController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteClient(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteClient(@PathVariable String id) {
         clientService.removeClient(id);
         return ResponseEntity.noContent().build();
     }
@@ -33,7 +33,7 @@ public class ClientController {
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<Client> partialUpdateClient(@PathVariable Integer id, @RequestBody Client client) {
+    public ResponseEntity<Client> partialUpdateClient(@PathVariable String id, @RequestBody Client client) {
         clientService.partialUpdateClient(id, client);
         return ResponseEntity.ok(client);
     }
@@ -45,7 +45,7 @@ public class ClientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Client> getClientById(@PathVariable Integer id) {
+    public ResponseEntity<Client> getClientById(@PathVariable String id) {
         Client client = clientService.findClientById(id);
         return client != null ? ResponseEntity.ok(client) : ResponseEntity.notFound().build();
     }

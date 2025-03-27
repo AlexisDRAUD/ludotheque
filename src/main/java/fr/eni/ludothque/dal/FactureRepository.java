@@ -1,11 +1,10 @@
 package fr.eni.ludothque.dal;
 
 import fr.eni.ludothque.bo.Facture;
-import fr.eni.ludothque.bo.Location;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface FactureRepository extends JpaRepository<Facture, Integer> {
+public interface FactureRepository extends MongoRepository<Facture, String> {
 }

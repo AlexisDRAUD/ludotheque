@@ -8,6 +8,6 @@ import java.util.List;
 public interface LocationService {
 
     void addLocation(Client client, Exemplaire exemplaire);
-    void addLocationByBarcode(Integer clientId, String codeBarre);
-    void returnLocations(List<String> codeBarres, Integer clientId);
+    void addLocationByBarcode(String clientId, String codeBarre);
+    void returnLocations(List<String> codeBarres, String clientId);
 }

@@ -36,7 +36,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public void addLocationByBarcode(Integer clientId, String codeBarre) {
+    public void addLocationByBarcode(String clientId, String codeBarre) {
         Exemplaire exemplaire = exemplaireRepository.findByCodeBarre(codeBarre)
                 .orElseThrow(() -> new RuntimeException("Exemplaire non trouvé"));
 
@@ -54,9 +54,16 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public void returnLocations(List<String> codeBarres, Integer clientId) {
-        List<Location> locations = locationRepository.findByExemplaireCodeBarreInAndClientId(codeBarres, clientId);
+    public void returnLocations(List<String> codeBarres, String clientId) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new RuntimeException("Client non trouvé"));
 
+        List<Exemplaire> exemplaires = exemplaireRepository.findByCodeBarreIn(codeBarres);
+        if (exemplaires.isEmpty()) {
+            throw new RuntimeException("Aucun exemplaire trouvé pour ces code-barres.");
+        }
+
+        List<Location> locations = locationRepository.findByExemplaireInAndClient(exemplaires, client);
         if (locations.isEmpty()) {
             throw new RuntimeException("Aucune location trouvée pour ces code-barres.");
         }
@@ -65,23 +72,21 @@ public class LocationServiceImpl implements LocationService {
 
         for (Location location : locations) {
             location.setDateRetour(now);
-            exemplaireRepository.save(location.getExemplaire());
-            locationRepository.save(location);
         }
+        locationRepository.saveAll(locations);
 
         Facture facture = new Facture(now, locations);
         factureRepository.save(facture);
 
         for (Location location : locations) {
             location.setFacture(facture);
-            locationRepository.save(location);
         }
+        locationRepository.saveAll(locations);
 
-        for (Location location : locations) {
-            Exemplaire exemplaire = location.getExemplaire();
+        for (Exemplaire exemplaire : exemplaires) {
             exemplaire.setEstLouable(true);
-            exemplaireRepository.save(exemplaire);
         }
+        exemplaireRepository.saveAll(exemplaires);
     }
 
 }

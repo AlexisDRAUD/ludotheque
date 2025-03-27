@@ -35,7 +35,7 @@ public class JeuServiceImpl implements JeuService {
     }
 
     @Override
-    public Jeu findJeuById(int id) {
+    public Jeu findJeuById(String id) {
         Optional<Jeu> jeu = jeuRepository.findById(id);
         return jeu.orElse(null);
     }
@@ -46,7 +46,7 @@ public class JeuServiceImpl implements JeuService {
     }
 
     @Override
-    public void updateJeuGenre(int id, Genre genre) {
+    public void updateJeuGenre(String id, Genre genre) {
         Optional<Jeu> jeu = jeuRepository.findById(id);
         jeu.ifPresent((j) -> {
             j.addGenre(genre);

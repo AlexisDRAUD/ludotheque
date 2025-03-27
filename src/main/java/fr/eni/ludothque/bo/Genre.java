@@ -8,14 +8,10 @@ import lombok.*;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @ToString()
-@Entity
-@Table(name = "GENRES")
 public class Genre {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
 
-    @Column(nullable = false, length = 50)
     @NonNull private String libelle;
 }

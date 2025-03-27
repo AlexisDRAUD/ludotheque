@@ -1,8 +1,8 @@
 package fr.eni.ludothque.bo;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,19 +13,14 @@ import java.util.List;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @ToString()
-@Entity
-@Table(name = "Facture")
 public class Facture {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
 
-    @Column(nullable = false)
     @NonNull private LocalDateTime datePaiment;
 
-    @OneToMany(mappedBy = "facture", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @NotEmpty
+    @DocumentReference(lazy=true)
     @NonNull private List<Location> locations = new ArrayList<>();
 
     public Facture(@NonNull LocalDateTime now, @NonNull List<Location> locations) {

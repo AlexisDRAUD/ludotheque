@@ -2,6 +2,7 @@ package fr.eni.ludothque.bo;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 @Data
 @NoArgsConstructor(force = true)
@@ -9,27 +10,19 @@ import lombok.*;
 @RequiredArgsConstructor
 @EqualsAndHashCode(of= {"email"})
 @ToString
-@Entity
-@Table(name = "CLIENTS")
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
 
-    @Column(nullable = false, length = 50)
     @NonNull private String nom;
 
-    @Column(nullable = false, length = 50)
     @NonNull private String prenom;
 
-    @Column(nullable = false, length = 50, unique = true)
     @NonNull private String email;
 
-    @Column(nullable = false, length = 10, unique = true)
     @NonNull private String noTel;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "adresse_id", referencedColumnName = "id")
+    @DocumentReference
     @NonNull private Adresse adresse;
 }

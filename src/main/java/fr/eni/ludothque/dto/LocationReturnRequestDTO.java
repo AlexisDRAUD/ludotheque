@@ -6,6 +6,6 @@ import lombok.Data;
 
 @Data
 public class LocationReturnRequestDTO {
-    private Integer clientId;
+    private String clientId;
     private List<String> codeBarres;
 }

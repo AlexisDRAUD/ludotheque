@@ -8,11 +8,11 @@ import java.util.List;
 public interface ClientService {
 
     void addClient(Client client);
-    void removeClient(int id);
-    Client findClientById(int id);
+    void removeClient(String id);
+    Client findClientById(String id);
     List<Client> findAllClients();
     List<Client> findAllClientByNom(String nom);
     void updateClient(Client client);
-    void partialUpdateClient(Integer id, Client client);
-    void updateClientAddress(int id, Adresse address);
+    void partialUpdateClient(String id, Client client);
+    void updateClientAddress(String id, Adresse address);
 }

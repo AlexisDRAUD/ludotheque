@@ -10,8 +10,8 @@ public interface JeuService {
 
     void addJeu(Jeu jeu);
     void removeJeu(Jeu jeu);
-    Jeu findJeuById(int id);
+    Jeu findJeuById(String id);
     void updateJeu(Jeu jeu);
-    void updateJeuGenre(int id, Genre genre);
+    void updateJeuGenre(String id, Genre genre);
     public List<JeuDTO> getAllJeux(String titre, Genre genre);
 }

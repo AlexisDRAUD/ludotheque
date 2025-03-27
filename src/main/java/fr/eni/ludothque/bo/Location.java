@@ -2,6 +2,7 @@ package fr.eni.ludothque.bo;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.time.LocalDateTime;
 
@@ -10,32 +11,23 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @ToString()
-@Entity
-@Table(name = "LOCATIONS")
 public class Location {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
 
-    @Column(nullable = false)
     @NonNull private LocalDateTime dateDepart;
 
-    @Column
     private LocalDateTime dateRetour;
 
-    @Column
     private float tarifJour;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id")
+    @DocumentReference(lazy=true)
     @NonNull private Client client;
 
-    @ManyToOne
-    @JoinColumn(name = "exemplaire_id")
+    @DocumentReference(lazy=true)
     @NonNull private Exemplaire exemplaire;
 
-    @ManyToOne
-    @JoinColumn(name = "facture_id")
+    @DocumentReference(lazy=true)
     private Facture facture;
 }
